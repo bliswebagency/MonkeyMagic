@@ -1,0 +1,45 @@
+Born from an egg on a mountain top, MonkeyMagic is an ExpressionEngine 2 add-on which has been crafted to do 2 things:
+
+SUBSCRIBE and UNSUBSCRIBE users from MailChimp.
+
+{exp:monkeymagic:subscribe api="XXX" list="YYY" email="user@email.com"}
+
+Is all you need to subscribe someone.
+
+Add two more letters ("un") and you get this...
+
+{exp:monkeymagic:unsubscribe api="XXX" list="YYY" email="user@email.com"}
+
+Which will promptly wipe that user off the list you just placed them on!
+
+Sound good? Wait, it get's better! We have more parameters:
+
+SUBSCRIBE:
+api (required): this is your MailChimp API. Don't have one? Go get one. http://bl.ms/1b
+list (required): this is your list id. Don't know where to find this? This will help: http://bl.ms/1c
+email (required): this is the email address you want to sign up. It is designed to only take 1 email address
+firstname: Want to give this person an identity? Here's your chance
+lastname: Need to prepare for a situation where you have to be polite? Knowing their surname can help here.
+doubleoptin (default: FALSE): If you want the user to confirm that they REALLY REALLY REALLY want to be on your list, set this to TRUE
+updatemember (default: FALSE): this will "update member"... actually, it won't because it's set to FALSE by default. You'll need to make this TRUE.
+
+UNSUBSCRIBE:
+api (required): this is your MailChimp API. Don't have one? Go get one. http://bl.ms/1b
+list (required): this is your list id. Don't know where to find this? This will help: http://bl.ms/1c
+email (required): this is the email address you want to sign up. It is designed to only take 1 email address
+delete (default: FALSE): never want to see this guy again - here's your chance, set it to TRUE
+goodbye (default: FALSE): you are the weakest link...
+notify (default: FALSE): if you're not trying to be sly, set this to TRUE
+
+LET USERS CHANGE LISTS!
+To move a user from one list to another, just create a template like this:
+
+{exp:monkeymagic:unsubscribe api="XXX" list="YYY" email="user@email.com"}
+{exp:monkeymagic:subscribe api="XXX" list="ZZZ" email="user@email.com"}
+
+This removes the user from list YYY and adds them to list ZZZ. This does require you know which list they were on previously though, so if you don't know, then do this:
+
+{exp:monkeymagic:unsubscribe api="XXX" list="AAA,BBB,CCC,YYY" email="user@email.com"}
+{exp:monkeymagic:subscribe api="XXX" list="ZZZ" email="user@email.com"}
+
+In this example, we've included all of our lists (except the one we want to subscribe the user to) in our Unsubscribe list. It will then unsubscribe the user from any list this person is found on before subscribing them to the new list.
